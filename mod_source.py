@@ -1,6 +1,8 @@
 import os
 import os.path
 
+import sys
+
 def replaceFileText(fname,textOrig,textReplace):
    try:
     with open(fname, 'r') as file :
@@ -40,6 +42,6 @@ def patchSource(hashS):
     replaceFileText('src/third_party/dart/tools/make_version.py','snapshot_hash = MakeSnapshotHashString()', 'snapshot_hash = \''+hashS+'\'')
     
 def main():
-    patchSource()
+    patchSource(sys.argv[1])
 
-main()
+main(sys.argv)
