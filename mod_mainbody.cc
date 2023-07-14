@@ -113,6 +113,17 @@ void ClassTable::Print() {
                     strcat(classText,append);		  
                     strcat(classText,"       \\n       }\\n");		
                 }	
+
+                // get function arguments
+               
+                auto& argument_types = Array::Handle(func.parameter_types());
+                for (intptr_t c_arg = 0; c_arg < argument_types.Length(); c_arg++) {	
+                    auto& argument_type = argument_types.At(c_arg);
+                    strcat(classText, argument_type.ToCString());
+                    strcat(classText, "; ");
+                }
+                strcat(classText, "\n");
+
             }		  	  
             strcat(classText," \\n      }\\n\\n");	  	  
             const Library& libr = Library::Handle(cls.library());

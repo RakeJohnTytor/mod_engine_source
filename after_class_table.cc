@@ -1,14 +1,26 @@
 
     auto& funcs = Array::Handle(cls.functions());   
-    
-    for (intptr_t f = 0; f < fields.Length(); f++) {    
-        sprintf("The %d-th function in the current class", f);
-    }
 
     if (funcs.Length()>1000) {    
         continue;    
     }	
     char classText[100000]=""; 	  
+    
+    for (intptr_t c = 0; c < funcs.Length(); c++) { 
+        strcat(classText, "The function in the current class\n"); 
+    }
+
+    bool flagHasCompressedPointers = cls.HasCompressedPointers();
+    char* flag;
+    
+    strcat(classText, "The class has compressed pointers: ");
+    if (flagHasCompressedPointers) {
+        strcat(classText, "True")
+    }
+    else {
+        strcat(classText, "False")
+    }
+
     String& supname = String::Handle();  	  
     name = cls.Name();	
     strcat(classText,cls.ToCString());  	  
@@ -87,7 +99,8 @@
             strcat(classText," { \\n\\n          "); 	  
             char append[80];	  
             sprintf(append," Code Offset: _kDartIsolateSnapshotInstructions + 0x%016" PRIxPTR "\\n",static_cast<uintptr_t>(codee.MonomorphicUncheckedEntryPoint()));	  
-            strcat(classText,append);		  strcat(classText,"       \\n       }\\n");		
+            strcat(classText,append);		  
+            strcat(classText,"       \\n       }\\n");		
         }	
     }		  	  
     strcat(classText," \\n      }\\n\\n");	  	  
